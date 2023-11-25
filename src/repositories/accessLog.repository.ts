@@ -3,11 +3,7 @@ import { AccessLogDTO } from '@/dto/accessLog.dto';
 import { AccessLog } from '@/entities/accessLog.entity';
 import { IAccessLog } from '@/interfaces/accessLog.interface';
 import { IQueryParams } from '@/interfaces/query.interface';
-import { Between, FindManyOptions, FindOperator, LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
-
-interface IDateFilter {
-  attempted_at?: FindOperator<number>;
-}
+import { Between, FindManyOptions, LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
 
 export class AccessLogRepository extends Repository<AccessLog> {
   constructor() {
@@ -30,7 +26,6 @@ export class AccessLogRepository extends Repository<AccessLog> {
       order: { attempted_at: 'DESC' },
       take: 30
     };
-    let dateOption: IDateFilter = {};
 
     if (query) {
       const { accessUuid, offset, lock, phone, onlyDenied, onlyGranted, datefrom, dateto } = query;
@@ -49,7 +44,6 @@ export class AccessLogRepository extends Repository<AccessLog> {
         findOptions.where = { ...findOptions.where, attempted_at: LessThanOrEqual(dateto) };
       }
 
-      findOptions.where = { ...findOptions.where, ...dateOption };
       findOptions.skip = offset || 0;
     }
 
