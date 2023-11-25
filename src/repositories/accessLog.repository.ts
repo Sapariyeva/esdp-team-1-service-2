@@ -15,9 +15,9 @@ export class AccessLogRepository extends Repository<AccessLog> {
   }
 
   async createLogEntry(dto: AccessLogDTO): Promise<IAccessLog> {
-    const { rule_uuid, phone, lock, attempted_at, attempt_status } = dto;
+    const { access_uuid, phone, lock, attempted_at, attempt_status } = dto;
     const newLogEntry = new AccessLog();
-    if (rule_uuid) newLogEntry.rule_uuid = rule_uuid;
+    if (access_uuid) newLogEntry.access_uuid = access_uuid;
     if (phone) newLogEntry.phone = phone;
     newLogEntry.lock = lock;
     newLogEntry.attempted_at = attempted_at;
@@ -33,30 +33,20 @@ export class AccessLogRepository extends Repository<AccessLog> {
     let dateOption: IDateFilter = {};
 
     if (query) {
-      const { offset, lock, phone, onlyDenied, onlyGranted, datefrom, dateto } = query;
+      const { accessUuid, offset, lock, phone, onlyDenied, onlyGranted, datefrom, dateto } = query;
 
-      if (lock) {
-        findOptions.where = { ...findOptions.where, lock };
-      }
-
-      if (phone) {
-        findOptions.where = { ...findOptions.where, phone };
-      }
-
-      if (onlyDenied || onlyGranted) {
-        if (onlyDenied) {
-          findOptions.where = { ...findOptions.where, attempt_status: false };
-        } else if (onlyGranted) {
-          findOptions.where = { ...findOptions.where, attempt_status: true };
-        }
-      }
+      if (accessUuid) findOptions.where = { ...findOptions.where, access_uuid: accessUuid };
+      if (lock) findOptions.where = { ...findOptions.where, lock };
+      if (phone) findOptions.where = { ...findOptions.where, phone };
+      if (onlyGranted) findOptions.where = { ...findOptions.where, attempt_status: true };
+      if (onlyDenied) findOptions.where = { ...findOptions.where, attempt_status: false };
 
       if (datefrom && dateto) {
-        findOptions.where = { ...findOptions.where, attempted_at: Between(datefrom, dateto)};
+        findOptions.where = { ...findOptions.where, attempted_at: Between(datefrom, dateto) };
       } else if (datefrom && !dateto) {
-        findOptions.where = { ...findOptions.where, attempted_at: MoreThanOrEqual(datefrom)};
+        findOptions.where = { ...findOptions.where, attempted_at: MoreThanOrEqual(datefrom) };
       } else if (!datefrom && dateto) {
-        findOptions.where = { ...findOptions.where, attempted_at: LessThanOrEqual(dateto)};
+        findOptions.where = { ...findOptions.where, attempted_at: LessThanOrEqual(dateto) };
       }
 
       findOptions.where = { ...findOptions.where, ...dateOption };

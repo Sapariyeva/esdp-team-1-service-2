@@ -5,7 +5,7 @@ export class AccessLogDTO {
   @Expose()
   @IsOptional()
   @IsString()
-  rule_uuid?: string;
+  access_uuid?: string;
 
   @Expose()
   @IsNotEmpty()

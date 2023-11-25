@@ -34,6 +34,7 @@ export class AccessLogController {
     try {
       const queryParams = req.query as Record<string, string>;
       const parsedQuery: IQueryParams = {
+        accessUuid: queryParams.accessUuid || undefined,
         offset: queryParams.offset ? parseInt(queryParams.offset) : undefined,
         datefrom: queryParams.datefrom ? parseInt(queryParams.datefrom) : undefined,
         dateto: queryParams.dateto ? parseInt(queryParams.dateto) : undefined,

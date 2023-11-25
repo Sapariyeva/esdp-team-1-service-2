@@ -7,7 +7,7 @@ export class AccessLog implements IAccessLog {
   _id!: number;
 
   @Column({ nullable: true })
-  rule_uuid!: string;
+  access_uuid!: string;
 
   @Column()
   lock!: string;

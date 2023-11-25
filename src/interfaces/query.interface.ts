@@ -1,4 +1,5 @@
 export interface IQueryParams {
+  accessUuid?: string;
   offset?: number;
   datefrom?: number;
   dateto?: number;
