@@ -15,6 +15,6 @@ export class AccessLogService {
   };
 
   public getLogs = async (query?: IQueryParams): Promise<IAccessLog[]> => {
-    return await this.repository.getLogs()
+    return await this.repository.getLogs(query);
   };
 }

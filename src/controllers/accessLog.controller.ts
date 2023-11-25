@@ -28,7 +28,6 @@ export class AccessLogController {
     } catch (err) {
       next(err);
     }
-    this.service.createLogEntry(req.body);
   };
 
   public getLogs: RequestHandler = async (req, res, next): Promise<void> => {
@@ -40,8 +39,8 @@ export class AccessLogController {
         dateto: queryParams.dateto ? parseInt(queryParams.dateto) : undefined,
         phone: queryParams.phone || undefined,
         lock: queryParams.lock || undefined,
-        onlyGranted: queryParams.onlyGranted === 'true' || undefined,
-        onlyDenied: queryParams.onlyDenied === 'true' || undefined
+        onlyGranted: queryParams.onlyGranted !== undefined ? true : undefined,
+        onlyDenied: queryParams.onlyDenied !== undefined ? true : undefined
       }
       const logs = await this.service.getLogs(parsedQuery);
       res.status(200).send({

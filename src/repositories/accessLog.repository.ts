@@ -3,7 +3,11 @@ import { AccessLogDTO } from '@/dto/accessLog.dto';
 import { AccessLog } from '@/entities/accessLog.entity';
 import { IAccessLog } from '@/interfaces/accessLog.interface';
 import { IQueryParams } from '@/interfaces/query.interface';
-import { Repository } from 'typeorm';
+import { Between, FindManyOptions, FindOperator, LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
+
+interface IDateFilter {
+  attempted_at?: FindOperator<number>;
+}
 
 export class AccessLogRepository extends Repository<AccessLog> {
   constructor() {
@@ -22,6 +26,43 @@ export class AccessLogRepository extends Repository<AccessLog> {
   }
 
   async getLogs(query?: IQueryParams): Promise<IAccessLog[]> {
-    return this.find();
+    let findOptions: FindManyOptions<AccessLog> = {
+      order: { attempted_at: 'DESC' },
+      take: 30
+    };
+    let dateOption: IDateFilter = {};
+
+    if (query) {
+      const { offset, lock, phone, onlyDenied, onlyGranted, datefrom, dateto } = query;
+
+      if (lock) {
+        findOptions.where = { ...findOptions.where, lock };
+      }
+
+      if (phone) {
+        findOptions.where = { ...findOptions.where, phone };
+      }
+
+      if (onlyDenied || onlyGranted) {
+        if (onlyDenied) {
+          findOptions.where = { ...findOptions.where, attempt_status: false };
+        } else if (onlyGranted) {
+          findOptions.where = { ...findOptions.where, attempt_status: true };
+        }
+      }
+
+      if (datefrom && dateto) {
+        findOptions.where = { ...findOptions.where, attempted_at: Between(datefrom, dateto)};
+      } else if (datefrom && !dateto) {
+        findOptions.where = { ...findOptions.where, attempted_at: MoreThanOrEqual(datefrom)};
+      } else if (!datefrom && dateto) {
+        findOptions.where = { ...findOptions.where, attempted_at: LessThanOrEqual(dateto)};
+      }
+
+      findOptions.where = { ...findOptions.where, ...dateOption };
+      findOptions.skip = offset || 0;
+    }
+
+    return this.find(findOptions);
   }
 }
