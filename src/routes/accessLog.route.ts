@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { IRoute } from '../interfaces/route.interface';
 
 export class AccessLogRoute implements IRoute {
-  public path = '/';
+  public path = '/logs';
   public router = Router();
   private controller: AccessLogController;
 

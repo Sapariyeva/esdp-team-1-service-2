@@ -1,8 +1,7 @@
 import express, { Application, RequestHandler } from 'express';
+import { appDataSource } from './config/dataSource';
 import { AppInit } from './interfaces/appInit.interface';
 import { IRoute } from './interfaces/route.interface';
-import path from 'path';
-import { appDataSource } from './config/dataSource';
 import { errorHandler } from './middlewares/errorHandler.middleware';
 
 export class App {
@@ -32,8 +31,6 @@ export class App {
   private initAssets() {
     this.app.use(express.json());
     this.app.use(express.static('public'));
-    this.app.set('view engine', 'ejs');
-    this.app.set('views', path.join(__dirname, '../views'));
   };
 
   private initErrorHandlers() {

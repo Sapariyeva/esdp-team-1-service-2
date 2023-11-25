@@ -6,13 +6,13 @@ export class AccessLog implements IAccessLog {
   @PrimaryGeneratedColumn()
   _id!: number;
 
-  @Column()
+  @Column({ nullable: true })
   rule_uuid!: string;
 
   @Column()
   lock!: string;
 
-  @Column()
+  @Column({ nullable: true })
   phone!: string;
 
   @Column({ type: 'bigint' })
