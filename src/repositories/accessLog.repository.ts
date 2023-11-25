@@ -2,6 +2,7 @@ import { appDataSource } from '@/config/dataSource';
 import { AccessLogDTO } from '@/dto/accessLog.dto';
 import { AccessLog } from '@/entities/accessLog.entity';
 import { IAccessLog } from '@/interfaces/accessLog.interface';
+import { IQueryParams } from '@/interfaces/query.interface';
 import { Repository } from 'typeorm';
 
 export class AccessLogRepository extends Repository<AccessLog> {
@@ -20,6 +21,7 @@ export class AccessLogRepository extends Repository<AccessLog> {
     return this.save(newLogEntry);
   }
 
-  // async getLogs(uuid: string): Promise<IAccessLog[]> {
-  // }
+  async getLogs(query?: IQueryParams): Promise<IAccessLog[]> {
+    return this.find();
+  }
 }

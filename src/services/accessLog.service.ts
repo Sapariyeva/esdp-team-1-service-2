@@ -1,5 +1,6 @@
 import { AccessLogDTO } from '@/dto/accessLog.dto';
 import { IAccessLog } from '@/interfaces/accessLog.interface';
+import { IQueryParams } from '@/interfaces/query.interface';
 import { AccessLogRepository } from '@/repositories/accessLog.repository';
 
 export class AccessLogService {
@@ -13,5 +14,7 @@ export class AccessLogService {
     return await this.repository.createLogEntry(dto);
   };
 
-  public getLogs = async (uuid: string): Promise<void> => {};
+  public getLogs = async (query?: IQueryParams): Promise<IAccessLog[]> => {
+    return await this.repository.getLogs()
+  };
 }
