@@ -38,7 +38,7 @@ Example Request:
 {
     "access_uuid": "94651f50-0a94-471a-83b8-dc41db226399",
     "lock": "b6385951-b27d-43c9-a407-3d84fe82166b",
-    "phone": "215.297.0524 x347",
+    "phone": "+70772195658",
     "attempted_at": "1703399756507",
     "attempt_status": true
 }
@@ -59,27 +59,19 @@ Example Response:
     "success": true,
     "logs": [
         {
-            "_id": 10,
-            "access_uuid": "7ebc7ed5-c3e4-47e7-be24-60b8d12cef18",
-            "lock": "90387617-c84f-4401-945d-f32c7a980a98",
-            "phone": "995.956.5217 x09514",
-            "attempted_at": "1703445496472",
-            "attempt_status": true
+            "_id": 52,
+            "access_uuid": "591f84fd-eda0-48ac-a6a1-2b83424faccf",
+            "lock": "7c0ac5ef-13ad-4bcd-bfe5-ea7264b59eb5",
+            "phone": "+77772314091",
+            "attempted_at": "1703332411898",
+            "attempt_status": false
         },
         {
-            "_id": 76,
-            "access_uuid": "94651f50-0a94-471a-83b8-dc41db226399",
-            "lock": "b6385951-b27d-43c9-a407-3d84fe82166b",
-            "phone": "215.297.0524 x347",
-            "attempted_at": "1703399756507",
-            "attempt_status": true
-        },
-        {
-            "_id": 37,
-            "access_uuid": "d0383761-5435-4586-a159-2994c9f4d86b",
-            "lock": "70456091-23e9-44e3-84be-6a997a8e60a9",
-            "phone": "(441) 398-3646 x414",
-            "attempted_at": "1693838362970",
+            "_id": 16,
+            "access_uuid": "caf93b8e-a9cc-4417-912f-41aed1ac7b7e",
+            "lock": "38178c35-93a2-491e-918c-14d766ad0e7c",
+            "phone": "+77775028569",
+            "attempted_at": "1702147584900",
             "attempt_status": false
         }
         // Additional log entries...
