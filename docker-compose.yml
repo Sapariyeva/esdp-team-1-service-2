@@ -1,0 +1,24 @@
+version: '3'
+services:
+  log_postgres:
+    image: postgres:latest
+    env_file:
+      - .env
+    ports:
+      - "5434:5434"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  express-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - log_postgres
+    env_file:
+      - .env
+    ports:
+      - "8002:8002"
+
+volumes:
+  postgres_data:
