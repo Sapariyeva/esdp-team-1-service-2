@@ -46,7 +46,7 @@ export class AccessLogController {
       const logs = await this.service.getLogs(parsedQuery);
       res.status(200).send({
         success: true,
-        logs
+        payload: logs
       })
     } catch (err) {
       next(err);
